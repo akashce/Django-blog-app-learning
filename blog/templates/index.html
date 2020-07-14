@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% for blg in blog %}
+<div class="col-md-8 mt-3 left">
+  <div class="card mb-4">
+    <img src="{{blg.post_img.url}}" class="card-img-top" alt="{{blg.title}}" style="width: fit-content; height: fit-content;">
+    <div class="card-body">
+      <h5 class="card-title">{{blg.title}}</h5>
+      <p class="card-text text-muted h6">{{ blg.name }} | {{ blg.date_pub}} </p>
+      <p class="card-text">{{blg.post_body|slice:":350"}}</p>
+      <a href="{% url 'detail_view' blg.id %}" class="btn btn-primary">Read More &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% if blog.has_other_pages %}
+  <ul class="pagination row" style="margin-left: auto;">
+    {% if blog.has_previous %}
+      <li style="margin: 5px;"><a class="btn btn-outline-dark" href="?page={{ blog.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="btn btn-outline-dark" style="margin: 5px;"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in blog.paginator.page_range %}
+      {% if blog.number == i %}
+        <li class="active btn btn-success" style="margin: 5px;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li style="margin: 5px;"><a class="btn btn-info" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if blog.has_next %}
+      <li style="margin: 5px;"><a class="btn btn-outline-dark" href="?page={{ blog.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class=" btn btn-outline-dark disabled" style="margin: 5px;"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock %}

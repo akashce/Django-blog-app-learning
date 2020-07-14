@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-8 mt-3 left">
+    <div class="card mb-4">
+      <img src="{{blg.post_img.url}}" class="card-img-top" alt="{{data.title}}" style="width: fit-content; height: fit-content;">
+      <div class="card-body">
+        <h5 class="card-title">{{data.title}}</h5>
+        <p class="card-text text-muted h6">{{ data.name }} | {{ data.date_pub}} </p>
+        <p class="card-text">{{data.post_body}}</p>
+        <a href="{% url 'update_view' data.id %}" class="btn btn-info">Update</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
